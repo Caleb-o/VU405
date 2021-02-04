@@ -7,7 +7,7 @@ import term
 import cipher
 
 # Cases - list of tuples with test case and expected output.
-test_cases = [ 
+test_cases: list = [ 
     ('13129828^#^@^hello,&@#&&#@world!848($@(','HELLOWORLD'),
     ('My name is Caleb', 'MYNAMEISCALEB'),
     ('Hello.my.name.is.johnny.', 'HELLOXMYXNAMEXISXJOHNNYX'),
