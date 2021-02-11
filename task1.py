@@ -4,7 +4,7 @@
     Date:       4/2/2021
 """
 
-import cipher, testing
+import cipher, testing, sys
 
 def main() -> None:
     """
@@ -12,7 +12,8 @@ def main() -> None:
     """
     testing.run_test_cases()
     
-    print('Converted text: \'' + cipher.convert_text(input('\nEnter text: ')) + '\'')
+    # Run input unless an argument is provided
+    print('Converted text: \'' + cipher.convert_text(input('\nEnter text: ') if len(sys.argv) == 1 else sys.argv[1]) + '\'')
 
 
 # Entry point

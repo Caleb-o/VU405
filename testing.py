@@ -18,8 +18,20 @@ test_cases: list = [
     ('                       a.b.c                  ', 'AXBXC'),
     ('@A!b#C%d^E&f*G(h)I', 'ABCDEFGHI'),
     ('......@#$%^&......', 'XXXXXXXXXXXX'),
-    #('@', 'a')
 ]
+
+
+def countUpper(string: str) -> int:
+    count: int = 0
+
+    for ch in string:
+        if 'A' <= ch <= 'Z':
+            count += 1
+    return count
+
+
+def testUppercase(string: str) -> None:
+    print(f'{countUpper(string)} capitals in \'{string}\'')
 
 
 def run_test_cases() -> None:
