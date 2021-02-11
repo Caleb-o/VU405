@@ -3,8 +3,7 @@
     Date:       4/2/2021
 """
 
-import term
-import cipher
+import term, cipher, sort
 
 # Cases - list of tuples with test case and expected output.
 test_cases: list = [ 
@@ -34,6 +33,11 @@ def testUppercase(string: str) -> None:
     print(f'{countUpper(string)} capitals in \'{string}\'')
 
 
+def testBubbleSort() -> None:
+    li: list = [2, 1, 7, 10, 3, 4, 9, 5, 6]
+    sort.bubbleSort(li)
+    print(li)
+
 def run_test_cases() -> None:
     """
         Automated method of running tests. Uses 'test_cases' list.
@@ -58,4 +62,4 @@ def run_test_cases() -> None:
         print(f'Test #{i}: {passed_text} - output \'{interpreted}\'', end='\n' if passed else f' - expected \'{expected}\'\n')
     
     # Show user number of tests passed and failed
-    print(f'Passed {term.tcol.PASS if pass_count > 0 else term.tcol.FAIL}{pass_count}/{len(test_cases)}{term.tcol.TEXT} cases!')
+    print(f'Passed {term.tcol.PASS if pass_count > 0 else term.tcol.FAIL}{pass_count}/{len(test_cases)}{term.tcol.TEXT} cases!', end='\n\n')
