@@ -14,7 +14,7 @@ def main() -> None:
     
     # Run input unless an argument is provided
     ciphered_text: str = cipher.convert_text(input('\nEnter text: ')) if len(sys.argv) == 1 else sys.argv[1]
-    print(f'Converted text: \'{cipher.shift_text(ciphered_text)}\'')
+    print(f'Converted text: \'{cipher.shift_text(ciphered_text, 3)}\'')
 
 
 # Entry point

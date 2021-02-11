@@ -5,6 +5,9 @@
 
 import re
 
+FROM_ALPHA: int = 26
+FROM_A: int = 65
+
 def convert_text(string: str) -> str:
     """
         Converts text to upper-case, removing whitespace and 
@@ -21,5 +24,6 @@ def shift_text(string: str, key: int) -> str:
     shifted_str: str = ''
     
     for t in string:
-        shifted_str += str((ord(t) + key) % 26)
+        #print(f'Char: {((((ord(t) + key) - FROM_A) % FROM_ALPHA) + FROM_A)}')
+        shifted_str += chr((((ord(t) + key) - FROM_A) % FROM_ALPHA) + FROM_A)
     return shifted_str

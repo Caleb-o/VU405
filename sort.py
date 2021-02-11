@@ -23,7 +23,6 @@ def bubbleSort(unsorted: list) -> None:
                 full_pass = False
 
 
-
 if __name__ == '__main__':
     li: list = [2, 1, 9, 3, 7, 5, 6, 8]
     print(f'Unsorted list: {li}')
