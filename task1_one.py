@@ -92,8 +92,8 @@ def run_test_cases():
 
 
 def main():
-    run_test_cases()
     print('Converted text: \'' + convert_to_Caesar(input('\nEnter text: ') if len(sys.argv) == 1 else sys.argv[1]) + '\'')
+    run_test_cases()
 
 
 # Entry
