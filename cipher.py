@@ -15,3 +15,11 @@ def convert_text(string: str) -> str:
 
     # Regular expression pattern to remove numbers and spaces
     return re.sub(r'[^A-Za-z]+|[0-9]+|\s+', '', string.replace('.', 'X').upper())
+
+
+def shift_text(string: str, key: int) -> str:
+    shifted_str: str = ''
+    
+    for t in string:
+        shifted_str += str((ord(t) + key) % 26)
+    return shifted_str
