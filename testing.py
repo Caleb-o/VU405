@@ -5,8 +5,14 @@
 
 import term, cipher, sort
 
+
+class TestType:
+    CONVERTED = 0,
+    SHIFTED = 1,
+
+
 # Cases - list of tuples with test case and expected output.
-test_cases: list = [ 
+test_cases_convert: list = [ 
     ('13129828^#^@^hello,&@#&&#@world!848($@(','HELLOWORLD'),
     ('My name is Caleb', 'MYNAMEISCALEB'),
     ('Hello.my.name.is.johnny.', 'HELLOXMYXNAMEXISXJOHNNYX'),
@@ -17,6 +23,12 @@ test_cases: list = [
     ('                       a.b.c                  ', 'AXBXC'),
     ('@A!b#C%d^E&f*G(h)I', 'ABCDEFGHI'),
     ('......@#$%^&......', 'XXXXXXXXXXXX'),
+]
+
+# Work with shift count of 1
+test_cases_shifted: list = [
+    ('abcd','BCDE'),
+    ('hello.i.am.caleb','IFMMPYJYBNYDBMFC'),
 ]
 
 
@@ -38,13 +50,23 @@ def testBubbleSort() -> None:
     sort.bubbleSort(li)
     print(li)
 
-def run_test_cases() -> None:
+
+def run_test_cases(type: TestType, title: str = '') -> None:
     """
         Automated method of running tests. Uses 'test_cases' list.
 
         Returns None/void.
     """
 
+    test_cases: list
+
+    if (type == TestType.CONVERTED):
+        test_cases = test_cases_convert
+    else:
+        test_cases = test_cases_shifted
+
+    if (len(title) > 0):
+        print(f'[{title}] ', end='')
     print(f'Running {term.tcol.PASS}{len(test_cases)}{term.tcol.TEXT} test cases...')
 
     pass_count: int = 0
@@ -53,7 +75,14 @@ def run_test_cases() -> None:
     for test, i in zip(test_cases, range(len(test_cases))):
         case, expected = test
 
-        interpreted: str = cipher.convert_text(case)
+        interpreted: str
+        
+        if (type == TestType.CONVERTED):
+            interpreted = cipher.convert_text(case) 
+        else: 
+            interpreted = cipher.shift_text(case, 1)
+
+
         passed: bool = interpreted == expected
         passed_text: str = f'{term.tcol.PASS}PASSED{term.tcol.TEXT}' if passed else f'{term.tcol.FAIL}FAILED{term.tcol.TEXT}'
 

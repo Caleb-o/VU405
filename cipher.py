@@ -17,13 +17,14 @@ def convert_text(string: str) -> str:
     """
 
     # Regular expression pattern to remove numbers and spaces
-    return re.sub(r'[^A-Za-z]+|[0-9]+|\s+', '', string.replace('.', 'X').upper())
+    return re.sub(r'[^A-Za-z]+|[0-9]+|\s+', '', string.replace('.', 'X')).upper()
 
 
 def shift_text(string: str, key: int) -> str:
     shifted_str: str = ''
+    #print(f'Shifting: {key}')
     
-    for t in string:
+    for t in convert_text(string):
         #print(f'Char: {((((ord(t) + key) - FROM_A) % FROM_ALPHA) + FROM_A)}')
         shifted_str += chr((((ord(t) + key) - FROM_A) % FROM_ALPHA) + FROM_A)
     return shifted_str
