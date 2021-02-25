@@ -9,6 +9,7 @@ import term, cipher, sort
 class TestType:
     CONVERTED = 0,
     SHIFTED = 1,
+    BOTH = 2
 
 
 # Cases - list of tuples with test case and expected output.
@@ -27,6 +28,11 @@ test_cases_convert: list = [
 
 # Work with shift count of 1
 test_cases_shifted: list = [
+    ('abcd','BCDE'),
+    ('hello.i.am.caleb','IFMMPYJYBNYDBMFC'),
+]
+
+test_cases_both: list = [
     ('abcd','BCDE'),
     ('hello.i.am.caleb','IFMMPYJYBNYDBMFC'),
 ]
@@ -62,8 +68,10 @@ def run_test_cases(type: TestType, title: str = '') -> None:
 
     if (type == TestType.CONVERTED):
         test_cases = test_cases_convert
-    else:
+    elif (type == TestType.SHIFTED):
         test_cases = test_cases_shifted
+    else:
+        test_cases = test_cases_both
 
     if (len(title) > 0):
         print(f'[{title}] ', end='')
@@ -79,8 +87,10 @@ def run_test_cases(type: TestType, title: str = '') -> None:
         
         if (type == TestType.CONVERTED):
             interpreted = cipher.convert_text(case) 
-        else: 
+        elif (type == TestType.SHIFTED):
             interpreted = cipher.shift_text(case, 1)
+        else: 
+            interpreted = cipher.shift_text(cipher.convert_text(case), 1)
 
 
         passed: bool = interpreted == expected

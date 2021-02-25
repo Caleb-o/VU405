@@ -6,23 +6,15 @@
 
 import cipher, testing, sys
 
+
 def main() -> None:
-    """
-        Main method to call test cases and user input to convert text.
-    """
-    testing.run_test_cases(testing.TestType.CONVERTED, 'Converted')
     testing.run_test_cases(testing.TestType.SHIFTED, 'Shifted')
 
-    argc: int = len(sys.argv)
-    shift_key: int = 1 if argc <= 2 else int(sys.argv[2])
-    to_cipher: str = input('\nEnter text: ') if argc == 1 else sys.argv[1]
-    
-    # Run input unless an argument is provided
-    ciphered_text: str = cipher.convert_text(to_cipher)
+    shift_key: int = 3
+    to_cipher: str = input('\nEnter text: ')
     
     print(f'Original text: \'{to_cipher}\'')
-    print(f'Converted text: \'{ciphered_text}\'')
-    print(f'Converted + Shifted [{shift_key}] text: \'{cipher.shift_text(ciphered_text, shift_key)}\'')
+    print(f'Shifted [{shift_key}] text: \'{cipher.shift_text(cipher.convert_text(to_cipher), shift_key)}\'')
 
 
 # Entry point
