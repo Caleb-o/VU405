@@ -10,10 +10,10 @@ def main() -> None:
     """
         Main method to call test cases and user input to convert text.
     """
-    testing.run_test_cases()
-    
     # Run input unless an argument is provided
     print('Converted text: \'' + cipher.convert_text(input('\nEnter text: ') if len(sys.argv) == 1 else sys.argv[1]) + '\'')
+
+    testing.run_test_cases(testing.TestType.CONVERTED, 'Converted')
 
 
 # Entry point

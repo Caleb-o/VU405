@@ -8,8 +8,7 @@ import term, cipher, sort
 
 class TestType:
     CONVERTED = 0,
-    SHIFTED = 1,
-    BOTH = 2
+    SHIFTED = 1
 
 
 # Cases - list of tuples with test case and expected output.
@@ -28,13 +27,11 @@ test_cases_convert: list = [
 
 # Work with shift count of 1
 test_cases_shifted: list = [
-    ('abcd','BCDE'),
-    ('hello.i.am.caleb','IFMMPYJYBNYDBMFC'),
-]
-
-test_cases_both: list = [
-    ('abcd','BCDE'),
-    ('hello.i.am.caleb','IFMMPYJYBNYDBMFC'),
+    ('abcd','DEFG', 3),
+    ('hello.i.am.caleb','KHOORALADPAFDOHE', 3),
+    ('KHOORALADPAFDOHE', 'HELLOXIXAMXCALEB', -3),
+    ('Wh@1 @ Fin3 d4y t0d4y!?, h0w 4r3 y0u 2?.', 'JUSVAQLGQLUJELHK', 13),
+    ('2021 1s th3 y34r 0f w1nn1ng!...345y', 'UVJATHYPPPIZZZA', 2)
 ]
 
 
@@ -70,8 +67,6 @@ def run_test_cases(type: TestType, title: str = '') -> None:
         test_cases = test_cases_convert
     elif (type == TestType.SHIFTED):
         test_cases = test_cases_shifted
-    else:
-        test_cases = test_cases_both
 
     if (len(title) > 0):
         print(f'[{title}] ', end='')
@@ -81,16 +76,13 @@ def run_test_cases(type: TestType, title: str = '') -> None:
 
     # Run through all cases using tuple and index
     for test, i in zip(test_cases, range(len(test_cases))):
-        case, expected = test
-
-        interpreted: str
         
         if (type == TestType.CONVERTED):
+            case, expected = test
             interpreted = cipher.convert_text(case) 
         elif (type == TestType.SHIFTED):
-            interpreted = cipher.shift_text(case, 1)
-        else: 
-            interpreted = cipher.shift_text(cipher.convert_text(case), 1)
+            case, expected, key = test
+            interpreted = cipher.shift_text(case, key)
 
 
         passed: bool = interpreted == expected
