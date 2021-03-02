@@ -20,11 +20,11 @@ def convert_text(string: str) -> str:
     return re.sub(r'[^A-Za-z]+|[0-9]+|\s+', '', string.replace('.', 'X')).upper()
 
 
-def shift_text(string: str, key: int) -> str:
+def shift_text(string: str, key: int, convert: bool = True) -> str:
     shifted_str: str = ''
     #print(f'Shifting: {key}')
     
-    for t in convert_text(string):
+    for t in convert_text(string) if convert else string:
         #print(f'Char: {((((ord(t) + key) - FROM_A) % FROM_ALPHA) + FROM_A)}')
         shifted_str += chr((((ord(t) + key) - FROM_A) % FROM_ALPHA) + FROM_A)
     return shifted_str
