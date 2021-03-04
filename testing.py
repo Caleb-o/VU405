@@ -90,7 +90,7 @@ def run_test_cases(type: TestType, title: str = '') -> None:
 
         if passed: pass_count += 1
 
-        print(f'Test #{i}: {passed_text} - output \'{interpreted}\'', end='\n' if passed else f' - expected \'{expected}\'\n')
+        print(f'Test #{i+1}: {passed_text} - output \'{interpreted}\'', end='\n' if passed else f' - expected \'{expected}\'\n')
     
     # Show user number of tests passed and failed
     print(f'Passed {term.tcol.PASS if pass_count > 0 else term.tcol.FAIL}{pass_count}/{len(test_cases)}{term.tcol.TEXT} cases!', end='\n\n')

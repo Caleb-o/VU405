@@ -5,7 +5,6 @@
     Updated:    2/3/2021
 """
 
-from typing import Type
 import cipher, sys, os, time
 
 
@@ -14,21 +13,29 @@ REST_TIME: float = 1.5
 
 
 def clear() -> None:
+    # Check if Windows or nix
     os.system('cls' if os.name == 'nt' else 'clear')
 
+
+# Generic wait for user call
 def enter_continue() -> None:
     time.sleep(REST_TIME / 2)
-    input('Press enter to continue...')
+    input('Press Enter to continue...')
 
 
 # Menu options
 def encrypt() -> None:
-    to_cipher: str = input('\nEnter text: ')
+    to_cipher: str = input('Enter text: ')
     shift_key: str = input('Enter a shift key: ')
     
     # Check inputs
-    to_cipher = to_cipher if len(to_cipher) > 0 else 'Hello.World!23'
-    shift_key = int(shift_key) if len(shift_key) > 0 else 3
+    to_cipher: str = to_cipher if len(to_cipher) > 0 else 'Hello.World!23'
+
+    # Validate text for conversion to int
+    try:
+        shift_key: int = int(shift_key) if len(shift_key) > 0 else 3
+    except (TypeError, ValueError):
+        shift_key: int = 3
     
     # Run input unless an argument is provided
     ciphered_text: str = cipher.convert_text(to_cipher)
@@ -43,18 +50,21 @@ def encrypt() -> None:
 def decrypt() -> None:
     pass
 
+
 def help() -> None:
     pass
 
+
 def tests() -> None:
     pass
+
 
 def quit() -> None:
     clear()
     sys.exit()
 
 
-# All menu options dictionary
+# All menu options dictionary with bound functions
 menu_options: dict = {
     0 : ('Encrypt', encrypt),
     1 : ('Decrypt', decrypt),
