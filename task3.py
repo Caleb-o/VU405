@@ -2,7 +2,7 @@
     Title:      'Task 3' - Convert and shift text with key
     Author:     Caleb Otto-Hayes
     Date:       11/2/2021
-    Updated:    2/3/2021
+    Updated:    4/3/2021
 """
 
 import cipher, sys, os, time, testing
@@ -27,28 +27,46 @@ def enter_continue() -> None:
 
 # Menu option functions
 def encrypt() -> None:
-    to_cipher: str = input('Enter text: ')
-    shift_key: str = input('Enter a shift key: ')
+    to_encrypt: str = input('Enter text: ')
+    shift_key: str = input(f'Enter a shift key (Default {DEFAULT_KEY}): ')
     
     # Check inputs
-    to_cipher: str = to_cipher if len(to_cipher) > 0 else 'Hello.World!23'
+    to_encrypt: str = to_encrypt if len(to_encrypt) > 0 else 'Hello.World!23'
 
     # Validate text for conversion to int
     try:
-        shift_key: int = int(shift_key) if len(shift_key) > 0 else 3
+        shift_key: int = int(shift_key) if len(shift_key) > 0 else DEFAULT_KEY
     except (TypeError, ValueError):
-        shift_key: int = 3
+        shift_key: int = DEFAULT_KEY
     
     # Run input unless an argument is provided
-    ciphered_text: str = cipher.convert_text(to_cipher)
+    ciphered_text: str = cipher.convert_text(to_encrypt)
     
-    print(f'Original text: \'{to_cipher}\'')
+    print(f'Original text: \'{to_encrypt}\'')
     print(f'Encrypted [{shift_key}] text: \'{cipher.shift_text(ciphered_text, shift_key)}\'')
 
     enter_continue()
 
 
 def decrypt() -> None:
+    to_decrypt: str = input('Enter text: ')
+    shift_key: str = input(f'Enter a negative shift key (Default {-DEFAULT_KEY}): ')
+    
+    # Check inputs
+    to_decrypt: str = to_decrypt if len(to_decrypt) > 0 else 'Hello.World!23'
+
+    # Validate text for conversion to int
+    try:
+        shift_key: int = int(shift_key) if len(shift_key) > 0 else -DEFAULT_KEY
+    except (TypeError, ValueError):
+        shift_key: int = -DEFAULT_KEY
+    
+    # Run input unless an argument is provided
+    ciphered_text: str = cipher.convert_text(to_decrypt)
+    
+    print(f'Original text: \'{to_decrypt}\'')
+    print(f'Decrypted [{shift_key}] text: \'{cipher.shift_text(ciphered_text, shift_key)}\'')
+
     enter_continue()
 
 
@@ -57,7 +75,9 @@ def help() -> None:
 
 
 def tests() -> None:
-    # Run all our test cases
+    """
+        Runs all the test cases to date.
+    """
     testing.run_test_cases(testing.TestType.CONVERTED, 'Converted')
     testing.run_test_cases(testing.TestType.SHIFTED, 'Shifted')
     enter_continue()
@@ -66,6 +86,22 @@ def tests() -> None:
 def quit() -> None:
     clear()
     sys.exit()
+
+
+# CLI options
+class cli_type:
+    ENCRYPT: 0
+    DECRYPT: 1
+    HELP: 2
+
+# Command line globals
+CLI_KEY: int = DEFAULT_KEY
+CLI_STR: str
+CLI_TYPE: cli_type
+
+# Command line option functions
+def cli_set_key(key: int):
+    pass
 
 
 # All menu options dictionary with bound functions
@@ -77,6 +113,9 @@ menu_options: dict = {
     4 : ('Quit', quit),
 }
 
+cli_options: dict {
+    'd':  
+}
 
 def print_options(options: dict) -> None:
     """
@@ -122,4 +161,8 @@ def main(options: dict = menu_options) -> None:
 
 # Entry point
 if __name__ == '__main__':
-    main()
+    # Command line usage
+    if len(sys.argv) > 1:
+        pass
+    else:
+        main()
