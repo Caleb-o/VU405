@@ -1,6 +1,7 @@
 """
     Author:     Caleb Otto-Hayes
     Date:       4/2/2021
+    Updated:    4/3/2021
 """
 
 import re
@@ -20,11 +21,5 @@ def convert_text(string: str) -> str:
     return re.sub(r'[^A-Za-z]+|[0-9]+|\s+', '', string.replace('.', 'X')).upper()
 
 
-def shift_text(string: str, key: int, convert: bool = True) -> str:
-    shifted_str: str = ''
-    #print(f'Shifting: {key}')
-    
-    for t in convert_text(string) if convert else string:
-        #print(f'Char: {((((ord(t) + key) - FROM_A) % FROM_ALPHA) + FROM_A)}')
-        shifted_str += chr((((ord(t) + key) - FROM_A) % FROM_ALPHA) + FROM_A)
-    return shifted_str
+def shift_text(string: str, key: int) -> str:
+    return ''.join(chr((((ord(t) + key) - FROM_A) % FROM_ALPHA) + FROM_A) for t in convert_text(string))

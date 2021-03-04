@@ -68,7 +68,6 @@ test_cases_convert: list = [
     ('......@#$%^&......', 'XXXXXXXXXXXX'),
 ]
 
-# Work with shift count of 1
 test_cases_shifted: list = [
     ('hello.i.am.caleb','KHOORALADPAFDOHE', 3),
     ('KHOORALADPAFDOHE', 'HELLOXIXAMXCALEB', -3),

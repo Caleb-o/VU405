@@ -5,11 +5,13 @@
     Updated:    2/3/2021
 """
 
-import cipher, sys, os, time
+import cipher, sys, os, time, testing
 
 
 # Constants
+TITLE: str = 'Caesar Cipher'
 REST_TIME: float = 1.5
+DEFAULT_KEY: int = 3
 
 
 def clear() -> None:
@@ -23,7 +25,7 @@ def enter_continue() -> None:
     input('Press Enter to continue...')
 
 
-# Menu options
+# Menu option functions
 def encrypt() -> None:
     to_cipher: str = input('Enter text: ')
     shift_key: str = input('Enter a shift key: ')
@@ -41,22 +43,24 @@ def encrypt() -> None:
     ciphered_text: str = cipher.convert_text(to_cipher)
     
     print(f'Original text: \'{to_cipher}\'')
-    print(f'Converted text: \'{ciphered_text}\'')
-    print(f'Converted + Shifted [{shift_key}] text: \'{cipher.shift_text(ciphered_text, shift_key)}\'')
+    print(f'Encrypted [{shift_key}] text: \'{cipher.shift_text(ciphered_text, shift_key)}\'')
 
     enter_continue()
 
 
 def decrypt() -> None:
-    pass
+    enter_continue()
 
 
 def help() -> None:
-    pass
+    enter_continue()
 
 
 def tests() -> None:
-    pass
+    # Run all our test cases
+    testing.run_test_cases(testing.TestType.CONVERTED, 'Converted')
+    testing.run_test_cases(testing.TestType.SHIFTED, 'Shifted')
+    enter_continue()
 
 
 def quit() -> None:
@@ -74,8 +78,12 @@ menu_options: dict = {
 }
 
 
-# Program functions
 def print_options(options: dict) -> None:
+    """
+        Prints out all menu options (or options provided - default is menu_options).
+    """
+    print(TITLE)
+
     # Print all options with numbers
     for op, i in zip(options, range(len(options))):
         print(f'{i + 1}. {options[i][0]}')
@@ -84,6 +92,7 @@ def print_options(options: dict) -> None:
 def main(options: dict = menu_options) -> None:
 
     while(True):
+        # Clear console and print menu options
         clear()
         print_options(options)
 

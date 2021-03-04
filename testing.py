@@ -1,6 +1,7 @@
 """
     Author:     Caleb Otto-Hayes
     Date:       4/2/2021
+    Updated:    4/3/2021
 """
 
 import term, cipher, sort
@@ -25,13 +26,17 @@ test_cases_convert: list = [
     ('......@#$%^&......', 'XXXXXXXXXXXX'),
 ]
 
-# Work with shift count of 1
 test_cases_shifted: list = [
-    ('abcd','DEFG', 3),
     ('hello.i.am.caleb','KHOORALADPAFDOHE', 3),
     ('KHOORALADPAFDOHE', 'HELLOXIXAMXCALEB', -3),
     ('Wh@1 @ Fin3 d4y t0d4y!?, h0w 4r3 y0u 2?.', 'JUSVAQLGQLUJELHK', 13),
-    ('2021 1s th3 y34r 0f w1nn1ng!...345y', 'UVJATHYPPPIZZZA', 2)
+    ('2021 1s th3 y34r 0f w1nn1ng!...345y', 'UVJATHYPPPIZZZA', 2),
+    ('   .4.    .3.    .2021.    ', 'AAAAAA', 3),
+    ('WHATISYOURNAMEX', 'EPIBQAGWCZVIUMF', 8),
+    ('EPIBQAGWCZVIUMF', 'WHATISYOURNAMEX', -8),
+    ('I am coding in Python...But I prefer programming in C.', 'YQCSETYDWYDFOJXEDNNNRKJYFHUVUHFHEWHQCCYDWYDSN', 16),
+    ('YQCSETYDWYDFOJXEDNNNRKJYFHUVUHFHEWHQCCYDWYDSN', 'IAMCODINGINPYTHONXXXBUTIPREFERPROGRAMMINGINCX', -16),
+    ('L00king 1nt0..@5tud1ng.@?4..0d1pl0m48280f   50ftw4r3 d3v.2021.', 'GFDIBIOSSOPYIBSSSYKGHAAORMYQSS', 255),
 ]
 
 
