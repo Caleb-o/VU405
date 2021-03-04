@@ -11,6 +11,12 @@ import re
 FROM_ALPHA: int = 26
 FROM_A: int = 65
 
+
+# Main defaults
+DEFAULT_TEXT: str = 'Hello.World!23    @.'
+DEFAULT_KEY: int = 3
+
+
 def convert_text(string: str) -> str:
     """
         Converts text to upper-case, removing whitespace and 
@@ -24,11 +30,13 @@ def convert_text(string: str) -> str:
 
 
 def shift_text(string: str, key: int, convert: bool = True) -> str:
+    """
+        Shifts each character by key value. Optional value
+        for converting prior to shift.
+    """
     shifted_str: str = ''
-    #print(f'Shifting: {key}')
     
     for t in convert_text(string) if convert else string:
-        #print(f'Char: {((((ord(t) + key) - FROM_A) % FROM_ALPHA) + FROM_A)}')
         shifted_str += chr((((ord(t) + key) - FROM_A) % FROM_ALPHA) + FROM_A)
     return shifted_str
 
@@ -121,17 +129,18 @@ def run_test_cases(type: TestType, title: str = '') -> None:
 def main() -> None:
     # Ask for user text to shift and the shift key
     to_cipher: str = input('Enter text: ')
-    shift_key: str = input('Enter a shift key: ')
+    shift_key: str = input(f'Enter a shift key (Default {DEFAULT_KEY}): ')
 
     # Check cipher is empty, set default value
     if len(to_cipher) == 0:
-        to_cipher = 'Hello.World!23    @.'
+        to_cipher = DEFAULT_TEXT
 
     # Validate text for conversion to int
     try:
-        shift_key: int = int(shift_key) if len(shift_key) > 0 else 3
+        shift_key: int = int(shift_key) if len(shift_key) > 0 else DEFAULT_KEY
     except (TypeError, ValueError):
-        shift_key: int = 3
+        # Use a default key
+        shift_key: int = DEFAULT_KEY
     
     # Show original text and the shifted version (with key)
     print(f'Original text: \'{to_cipher}\'')
