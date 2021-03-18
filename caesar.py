@@ -246,8 +246,9 @@ menu_options: dict = {
 
 # Options for the command-line
 cli_options: dict = {
-    '-e':    encrypt,
-    '-d':    decrypt,
+    '-e':   encrypt,
+    '-d':   decrypt,
+    '-t':   opt_tests,
 }
 
 def print_options(options: dict) -> None:
@@ -297,12 +298,25 @@ def main(options: dict = menu_options) -> None:
 # Entry point
 if __name__ == '__main__':
     # Command line usage
-    if len(sys.argv) > 1:
-        # Check if arguments are correct length 
-        if len(sys.argv) < 3:
-            print('Command syntax: caesar.py [type: -e -d] [message] [key] OR caesar.py for UI.\neg. task3.py -e "hello" 3')
-        else:
-            cmd = cli_options[sys.argv[1]](sys.argv[2], sys.argv[3] if len(sys.argv) > 3 else DEFAULT_KEY)
+    args_c: int = len(sys.argv)
+
+    # Check argument count
+    if args_c > 1:
+        # Try and get option from dictionary
+        try:
+            cmd = cli_options[sys.argv[1]]
+        except Exception:
+            cmd = None
+            print(f'Command not recognised: {sys.argv[1]}')
+
+        if cmd != None:
+            # Check if arguments are correct length 
+            if args_c == 1:
+                cmd()
+            elif args_c < 3:
+                print('Command syntax: caesar.py [type: -e -d] [message] [key] OR caesar.py for UI.\neg. task3.py -e "hello" 3')
+            else:
+                cmd(sys.argv[2], sys.argv[3] if len(sys.argv) > 3 else DEFAULT_KEY)
     else:
         # Call UI program
         main()
