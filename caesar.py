@@ -325,7 +325,7 @@ if __name__ == '__main__':
             if args_c == 2 and cmd[0] == 1:
                 cmd[1]()
             elif args_c < 3 and cmd[0] > 1:
-                print('Command syntax: caesar.py [type: -e -d] [message] [key] OR caesar.py for UI.\neg. task3.py -e "hello" 3')
+                print('Command syntax: caesar.py [type: -e -d] [message] [key] OR caesar.py for UI.\neg. caesar.py -e "hello" 3')
             else:
                 cmd[1](sys.argv[2], sys.argv[3] if len(sys.argv) > 3 else DEFAULT_KEY)
     else:
