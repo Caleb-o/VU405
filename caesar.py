@@ -17,6 +17,12 @@ DEFAULT_TEXT: str = 'Hello.World!23    @.'
 DEFAULT_KEY: int = 3
 
 
+# Program Constants
+TITLE: str = 'Caesar Cipher'
+REST_TIME: float = 1.5
+DEFAULT_KEY: int = 3
+
+
 def convert_text(string: str) -> str:
     """
         Converts text to upper-case, removing whitespace and 
@@ -49,9 +55,9 @@ class TestType:
 
 # Colours for terminal output (Test cases)
 class tcol:
-    TEXT = '\033[0m' # White
-    PASS = '\033[92m' # Green
-    FAIL = '\033[91m' # Red
+    TEXT = '\033[0m'    # White
+    PASS = '\033[92m'   # Green
+    FAIL = '\033[91m'   # Red
 
 
 # Cases - list of tuples with test case and expected output.
@@ -123,11 +129,6 @@ def run_test_cases(type: TestType, title: str = '') -> None:
     # Show user number of tests passed and failed
     print(f'Passed {tcol.PASS if pass_count > 0 else tcol.FAIL}{pass_count}/{len(test_cases)}{tcol.TEXT} cases!', end='\n\n')
 
-# Constants
-TITLE: str = 'Caesar Cipher'
-REST_TIME: float = 1.5
-DEFAULT_KEY: int = 3
-
 
 def clear() -> None:
     # Check if Windows or nix
@@ -150,6 +151,9 @@ def encrypt(message: str, key: str) -> None:
     except (TypeError, ValueError):
         shift_key: int = DEFAULT_KEY
 
+    if shift_key == 0:
+        shift_key = DEFAULT_KEY
+
     # Invert key if below 0
     if shift_key < 0:
         shift_key *= -1
@@ -171,6 +175,9 @@ def decrypt(message: str, key: str) -> None:
     except (TypeError, ValueError):
         shift_key: int = -DEFAULT_KEY
 
+    if shift_key == 0:
+        shift_key = -DEFAULT_KEY
+
     # Invert key if above 0
     if shift_key > 0:
         shift_key *= -1
@@ -181,6 +188,14 @@ def decrypt(message: str, key: str) -> None:
     print(f'Original text: \'{to_decrypt}\'')
     print(f'Decrypted [{shift_key}] text: \'{shift_text(ciphered_text, shift_key)}\'')
 
+
+def help() -> None:
+    print("""
+Encrypt - Asks for a message and key to encrypt and shows the encrypted text.
+Decrypt - Asks for an encrypted message and key to decrypt and shows the decrypted text.
+Tests - Shows test cases, whether conversion and full encryption passes the test.
+Quit - Exits the program.
+""")
 
 # Menu option functions
 def opt_encrypt() -> None:
@@ -209,12 +224,7 @@ def opt_help() -> None:
     """
         Program help menu.
     """
-    print("""
-Encrypt - Asks for a message and key to encrypt and shows the encrypted text.
-Decrypt - Asks for an encrypted message and key to decrypt and shows the decrypted text.
-Tests - Shows test cases, whether conversion and full encryption passes the test.
-Quit - Exits the program.
-""")
+    help()
     enter_continue()
 
 
@@ -246,9 +256,10 @@ menu_options: dict = {
 
 # Options for the command-line
 cli_options: dict = {
-    '-e':   encrypt,
-    '-d':   decrypt,
-    '-t':   opt_tests,
+    '-e':   (2, encrypt),
+    '-d':   (2, decrypt),
+    '-t':   (1, opt_tests),
+    '-h':   (1, help),
 }
 
 def print_options(options: dict) -> None:
@@ -258,7 +269,7 @@ def print_options(options: dict) -> None:
     print(TITLE)
 
     # Print all options with numbers
-    for op, i in zip(options, range(len(options))):
+    for i in range(len(options)):
         print(f'{i + 1}. {options[i][0]}')
 
 
@@ -307,16 +318,16 @@ if __name__ == '__main__':
             cmd = cli_options[sys.argv[1]]
         except Exception:
             cmd = None
-            print(f'Command not recognised: {sys.argv[1]}')
+            print(f'Command not recognised: \'{sys.argv[1]}\'')
 
         if cmd != None:
             # Check if arguments are correct length 
-            if args_c == 1:
-                cmd()
-            elif args_c < 3:
+            if args_c == 2 and cmd[0] == 1:
+                cmd[1]()
+            elif args_c < 3 and cmd[0] > 1:
                 print('Command syntax: caesar.py [type: -e -d] [message] [key] OR caesar.py for UI.\neg. task3.py -e "hello" 3')
             else:
-                cmd(sys.argv[2], sys.argv[3] if len(sys.argv) > 3 else DEFAULT_KEY)
+                cmd[1](sys.argv[2], sys.argv[3] if len(sys.argv) > 3 else DEFAULT_KEY)
     else:
         # Call UI program
         main()
